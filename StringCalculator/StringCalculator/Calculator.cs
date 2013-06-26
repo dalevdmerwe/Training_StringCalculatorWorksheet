@@ -41,7 +41,7 @@ namespace StringCalculator
             
             foreach (var number in numbers)
             {
-                if (number != String.Empty)
+                if (number != String.Empty && Convert.ToInt32(number) <=1000)
                 sumamount += Convert.ToInt32(number);
             }
 
@@ -121,7 +121,21 @@ namespace StringCalculator
             var sut = new Calculator().Add(negativeinput);
         }
 
+        [Test]
+        public void NumberBiggerThen1000Ignored()
+        {
+            string bignumberinput = "1002,2";
+            var sut = new Calculator().Add(bignumberinput);
+            Assert.That(sut, Is.EqualTo(2));
+        }
 
+        [Test]
+        public void LongDelimitersSpecified()
+        {
+            string longDelimitersinputstring = "//[***]\n1***2***3";
+            var sut = new Calculator().Add(longDelimitersinputstring);
+            Assert.That(sut, Is.EqualTo(6));
+        }
         
     }
 }
