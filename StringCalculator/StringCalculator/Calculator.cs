@@ -27,13 +27,18 @@ namespace StringCalculator
                 inputString = inputString.Substring(3, inputString.Length - 3);
             }
 
+            if (inputString.Contains("-"))
+            {
+                throw new Exception("Negatives Not allowed");
+            }
+
             delimeters[1] = '\n';
             delimeters[2] = ',';
 
             var sumamount = 0;
             var numbers = inputString.Split(delimeters);
 
-
+            
             foreach (var number in numbers)
             {
                 if (number != String.Empty)
@@ -93,6 +98,29 @@ namespace StringCalculator
             var sut = new Calculator().Add(input);
             Assert.That(sut,Is.EqualTo(result));
         }
+
+        [Test]
+        [ExpectedException(typeof(Exception))]
+        public void AddingNegativesWillThrowException()
+        {
+            string negativeinput = "//&\n-5&7";
+            var sut = new Calculator().Add(negativeinput);
+            //Assert.That(sut, Is.EqualTo("Negatives Not allowed"));
+            //Assert.Throws(typeof(ArgumentException), "Negatives Not allowed");
+           
+//            TestDelegate add = () => Calculator.Add("-1");
+//            Assert.Throws<Exception>(add);
+        }
+
+
+        [Test]
+        [ExpectedException("Negatives Not allowed")]
+        public void NegativesThrowsException()
+        {
+            string negativeinput = "//&\n-5&7";
+            var sut = new Calculator().Add(negativeinput);
+        }
+
 
         
     }
