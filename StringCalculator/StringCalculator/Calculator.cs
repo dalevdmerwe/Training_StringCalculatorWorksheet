@@ -114,7 +114,7 @@ namespace StringCalculator
 
 
         [Test]
-        [ExpectedException("Negatives Not allowed")]
+        [ExpectedException("System.Exception : Negatives Not allowed")]
         public void NegativesThrowsException()
         {
             string negativeinput = "//&\n-5&7";
