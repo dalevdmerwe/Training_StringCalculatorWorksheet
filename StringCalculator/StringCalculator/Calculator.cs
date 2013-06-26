@@ -85,12 +85,13 @@ namespace StringCalculator
             Assert.That(sut,Is.EqualTo(result));
         }
 
-        [Test]
-        public void SpecifyDelimeter()
+        [TestCase("//;\n1;3",4)]
+        [TestCase("//|\n1|3|5", 9)]
+        [TestCase("// \n1 3 6", 10)]
+        public void SpecifyDelimeter(string input, int result)
         {
-            string inputString = "//;\n1;3";
-            var sut = new Calculator().Add(inputString);
-            Assert.That(sut,Is.EqualTo(4));
+            var sut = new Calculator().Add(input);
+            Assert.That(sut,Is.EqualTo(result));
         }
 
         
