@@ -11,12 +11,12 @@ namespace StringCalculator
     {
         public int Add(string inputString)
         {
-            int sumamount = 0;
+            var sumamount = 0;
 
             if (inputString == String.Empty)
                 inputString = "0";
 
-            var numbers = inputString.Split(',');
+            var numbers = inputString.Split(',','\n');
 
             foreach (var c in numbers)
             {
@@ -31,15 +31,10 @@ namespace StringCalculator
     public class CalculatorTests
     {
         [Test]
-        public void emptyStringReturnsZero()
+        public void EmptyStringReturnsZero()
         {
-            //arrange
             string emptystring = "";
-
-            //act
             var sut = new Calculator();
-
-            //assert
             Assert.That(sut.Add(emptystring), Is.EqualTo(0));
         }
 
@@ -48,9 +43,8 @@ namespace StringCalculator
         [TestCase("1",1)]
         [TestCase("5", 5)]
         [TestCase("7", 7)]
-        public void stringwithNumberReturnsthatNumber(string inputnumber, int expectedresult)
+        public void StringwithNumberReturnsthatNumber(string inputnumber, int expectedresult)
         {
-            //string numberstring = "1";
             var sut = new Calculator().Add(inputnumber);
             Assert.That(sut,Is.EqualTo(expectedresult));
         }
@@ -59,15 +53,29 @@ namespace StringCalculator
         [TestCase("1,2,5", 8)]
         [TestCase("0,1,2", 3)]
         [TestCase("0,0,0", 0)]
-        public void TwoNumbersReturnsSum(string inputstring, int result)
+        public void TwoOrMoreNumbersReturnsSum(string inputstring, int result)
         {
-            //arrange
-            //string twonumbers = "1,2";
-            //act
             var sut = new Calculator().Add(inputstring);
-            //assert
             Assert.That(sut, Is.EqualTo(result));
 
         }
+
+        [TestCase("1\n2",3)]
+        [TestCase("1\n2,3", 6)]
+        public void NewLineCharacterAsDelimiter(string inputString, int result)
+        {
+            var sut = new Calculator().Add(inputString);
+            Assert.That(sut,Is.EqualTo(result));
+        }
+
+        [Test]
+        public void SpecifyDelimeter()
+        {
+            string inputString = "//;\n1;3";
+            var sut = new Calculator().Add(inputString);
+            Assert.That(sut,Is.EqualTo(3));
+        }
+
+        
     }
 }
