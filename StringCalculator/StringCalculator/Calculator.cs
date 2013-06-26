@@ -7,20 +7,37 @@ using StringCalculator;
 
 namespace StringCalculator
 {
+    class program 
+    {
+        static void Main(string[] args)
+        {
+//            var myCalculator = new Calculator();
+//            myCalculator.Add("//;\n1;3");
+        }
+    }
+
     public class Calculator
     {
         public int Add(string inputString)
         {
-            var sumamount = 0;
-
-            if (inputString == String.Empty)
-                inputString = "0";
-
-            var numbers = inputString.Split(',','\n');
-
-            foreach (var c in numbers)
+            char [] delimeters = new char[5];
+            if (inputString.Contains("//"))
             {
-                sumamount += Convert.ToInt32(c);
+                delimeters[0] = inputString.Substring(2, 1)[0];
+                inputString = inputString.Substring(3, inputString.Length - 3);
+            }
+
+            delimeters[1] = '\n';
+            delimeters[2] = ',';
+
+            var sumamount = 0;
+            var numbers = inputString.Split(delimeters);
+
+
+            foreach (var number in numbers)
+            {
+                if (number != String.Empty)
+                sumamount += Convert.ToInt32(number);
             }
 
             return sumamount;
@@ -73,7 +90,7 @@ namespace StringCalculator
         {
             string inputString = "//;\n1;3";
             var sut = new Calculator().Add(inputString);
-            Assert.That(sut,Is.EqualTo(3));
+            Assert.That(sut,Is.EqualTo(4));
         }
 
         
