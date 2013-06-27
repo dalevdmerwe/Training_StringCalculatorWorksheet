@@ -212,5 +212,13 @@ namespace StringCalculator
             Assert.That(sut,Is.EqualTo(6));
         }
 
+        [Test]
+        public void MultipletDelimetersofanyLength()
+        {
+            string inputstring = "//[***][%%%]\n1***2%%%3";
+            var sut = new Calculator().Add(inputstring);
+            Assert.That(sut, Is.EqualTo(6));
+        }
+
     }
 }
